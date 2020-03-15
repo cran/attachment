@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="Sébastien Rochette" />
 
-<meta name="date" content="2019-05-04" />
+<meta name="date" content="2020-03-15" />
 
 <title>Extract scripts dependencies and generate your Description file</title>
 
@@ -20,9 +20,9 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -32,14 +32,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -48,9 +50,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -96,7 +98,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -117,9 +119,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -288,8 +287,12 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
+
+
+
 
 </head>
 
@@ -299,71 +302,90 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Extract scripts dependencies and generate your Description file</h1>
-<h4 class="author"><em>Sébastien Rochette</em></h4>
-<h4 class="date"><em>2019-05-04</em></h4>
+<h4 class="author">Sébastien Rochette</h4>
+<h4 class="date">2020-03-15</h4>
 
 
 
+<script type="text/javascript">
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 <div id="load-package-attachment" class="section level2">
 <h2>Load package {attachment}</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(attachment)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(attachment)</span></code></pre></div>
 </div>
 <div id="use-devstuff_history.r" class="section level2">
 <h2>Use “devstuff_history.R”</h2>
 <p>When building your package, create a file called “devstuff_history.R” in the root directory. You will store all “manual” calls to <code>devtools::xxx</code> and <code>usethis::xxx</code> in this script.<br />
 Its first line should be :</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">usethis<span class="op">::</span><span class="kw">use_build_ignore</span>(<span class="st">&quot;devstuff_history.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>usethis<span class="op">::</span><span class="kw">use_build_ignore</span>(<span class="st">&quot;devstuff_history.R&quot;</span>)</span></code></pre></div>
 <p>You can then call {attachment} in this file to help you build your description file.</p>
 </div>
 <div id="fill-your-description-file" class="section level2">
 <h2>Fill your DESCRIPTION file</h2>
+<div id="for-packages" class="section level3">
+<h3>For packages</h3>
 <p>What you really want is to fill and update your description file along with the modifications of your documentation. Indeed, only this function will really be called in your “devstuff_history.R”.<br />
-Run <code>attachment::att_to_description()</code> each time before <code>devtools::check()</code>, this will save you some warnings and errors !</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">att_to_description</span>()</a></code></pre></div>
+Run <code>attachment::att_amend_desc()</code> each time before <code>devtools::check()</code>, this will save you some warnings and errors !</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">att_amend_desc</span>()</span></code></pre></div>
+</div>
+<div id="for-bookdown" class="section level3">
+<h3>For bookdown</h3>
+<p>You can use a similar approch for a {bookdown} description file using <code>attachment::att_to_desc_from_is()</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># bookdown Imports are in Rmds</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>imports &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;bookdown&quot;</span>, attachment<span class="op">::</span><span class="kw">att_from_rmds</span>(<span class="st">&quot;.&quot;</span>))</span>
+<span id="cb4-3"><a href="#cb4-3"></a>attachment<span class="op">::</span><span class="kw">att_to_desc_from_is</span>(<span class="dt">path.d =</span> <span class="st">&quot;DESCRIPTION&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>                                <span class="dt">imports =</span> imports, <span class="dt">suggests =</span> <span class="ot">NULL</span>)</span></code></pre></div>
+</div>
 </div>
 <div id="get-all-packages-listed-in-namespace" class="section level2">
 <h2>Get all packages listed in “namespace”</h2>
 <p>You can get the list of packages in your package with <code>att_from_namespace()</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">att_from_namespace</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">att_from_namespace</span>()</span></code></pre></div>
 </div>
 <div id="get-all-packages-added-using-pkgfunction-or-libraryrequire" class="section level2">
 <h2>Get all packages added using <code>pkg::function</code> or library/require</h2>
 <p>This reads all files in directories of R scripts (default to <code>R</code> directory of a package)</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">att_from_rscripts</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">att_from_rscripts</span>()</span></code></pre></div>
 </div>
 <div id="get-all-packages-called-in-your-rmd" class="section level2">
 <h2>Get all packages called in your Rmd</h2>
 <p>If you have vignette, you may want to list extra libraries, not listed in your “Depends” list. This function applies to any Rmd file, of course.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">att_from_rmds</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">att_from_rmds</span>()</span></code></pre></div>
 </div>
 <div id="create-a-file-for-package-installation" class="section level2">
 <h2>Create a file for package installation</h2>
 <p>Once your package is finished. Well, is a package ever finished ? Let’s say, once you want to release a version of your package, you may want to deliver the list of dependencies your users will have to install. A little script like <code>install.packages(c(...all dep...))</code> would be so nice :</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">create_dependencies_file</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">create_dependencies_file</span>()</span></code></pre></div>
 <p>This file will be placed in <code>inst/dependencies.R</code> and contains :</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># No Remotes ----</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co"># remotes::install_github(&quot;ThinkR-open/fcuk&quot;)</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co"># Attachments ----</span></a>
-<a class="sourceLine" id="cb8-4" title="4">to_install &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;covr&quot;</span>, <span class="st">&quot;desc&quot;</span>, <span class="st">&quot;devtools&quot;</span>, <span class="st">&quot;glue&quot;</span>, <span class="st">&quot;knitr&quot;</span>, <span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;stats&quot;</span>, <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;testthat&quot;</span>, <span class="st">&quot;utils&quot;</span>)</a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="cf">for</span> (i <span class="cf">in</span> to_install) {</a>
-<a class="sourceLine" id="cb8-6" title="6">  <span class="kw">message</span>(<span class="kw">paste</span>(<span class="st">&quot;looking for &quot;</span>, i))</a>
-<a class="sourceLine" id="cb8-7" title="7">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(i)) {</a>
-<a class="sourceLine" id="cb8-8" title="8">    <span class="kw">message</span>(<span class="kw">paste</span>(<span class="st">&quot;     installing&quot;</span>, i))</a>
-<a class="sourceLine" id="cb8-9" title="9">    <span class="kw">install.packages</span>(i)</a>
-<a class="sourceLine" id="cb8-10" title="10">  }</a>
-<a class="sourceLine" id="cb8-11" title="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># No Remotes ----</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co"># remotes::install_github(&quot;ThinkR-open/fcuk&quot;)</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># Attachments ----</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>to_install &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;covr&quot;</span>, <span class="st">&quot;desc&quot;</span>, <span class="st">&quot;devtools&quot;</span>, <span class="st">&quot;glue&quot;</span>, <span class="st">&quot;knitr&quot;</span>, <span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;stats&quot;</span>, <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;testthat&quot;</span>, <span class="st">&quot;utils&quot;</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="cf">for</span> (i <span class="cf">in</span> to_install) {</span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="kw">message</span>(<span class="kw">paste</span>(<span class="st">&quot;looking for &quot;</span>, i))</span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(i)) {</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    <span class="kw">message</span>(<span class="kw">paste</span>(<span class="st">&quot;     installing&quot;</span>, i))</span>
+<span id="cb9-9"><a href="#cb9-9"></a>    <span class="kw">install.packages</span>(i)</span>
+<span id="cb9-10"><a href="#cb9-10"></a>  }</span>
+<span id="cb9-11"><a href="#cb9-11"></a>}</span></code></pre></div>
 </div>
 <div id="other-possibilities" class="section level2">
 <h2>Other possibilities</h2>
 <p>Of course, you can also use {attachment} out of a package to list all package dependencies of R scripts using <code>att_from_rscripts</code> or Rmd files using <code>att_from_rmds</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">dummypackage &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;dummypackage&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;attachment&quot;</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2"></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw">att_from_rscripts</span>(<span class="dt">path =</span> <span class="kw">file.path</span>(dummypackage, <span class="st">&quot;R&quot;</span>))</a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt; [1] &quot;stats&quot;</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="kw">att_from_rmds</span>(<span class="dt">path =</span> <span class="kw">file.path</span>(dummypackage, <span class="st">&quot;vignettes&quot;</span>))</a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; [1] &quot;knitr&quot;     &quot;rmarkdown&quot; &quot;ggplot2&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>dummypackage &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;dummypackage&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;attachment&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">att_from_rscripts</span>(<span class="dt">path =</span> <span class="kw">file.path</span>(dummypackage, <span class="st">&quot;R&quot;</span>))</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt; [1] &quot;stats&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">att_from_rmds</span>(<span class="dt">path =</span> <span class="kw">file.path</span>(dummypackage, <span class="st">&quot;vignettes&quot;</span>))</span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; [1] &quot;knitr&quot;     &quot;rmarkdown&quot; &quot;ggplot2&quot;</span></span></code></pre></div>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

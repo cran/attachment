@@ -4,15 +4,18 @@
 \alias{att_from_description}
 \title{Return all package dependencies from current package}
 \usage{
-att_from_description(path = "DESCRIPTION", dput = FALSE,
-  field = c("Depends", "Imports", "Suggests"))
+att_from_description(
+  path = "DESCRIPTION",
+  dput = FALSE,
+  field = c("Depends", "Imports", "Suggests")
+)
 }
 \arguments{
 \item{path}{path to the DESCRIPTION file}
 
 \item{dput}{if FALSE return a vector instead of dput output}
 
-\item{field}{DESCRIPTION field to parse, Import and Depends by default}
+\item{field}{DESCRIPTION field to parse, Import, Suggests and Depends by default}
 }
 \value{
 A character vector with packages names
