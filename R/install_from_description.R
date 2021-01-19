@@ -33,14 +33,14 @@ install_from_description <- function(path = "DESCRIPTION", field = c("Depends", 
 #' }
 #'
 install_if_missing <- function(to_be_installed, ...) {
-  already_installed <- basename(try(find.package(to_be_installed), silent = TRUE))
+  already_installed <- basename(try(find.package(to_be_installed, quiet = TRUE), silent = TRUE))
   will_be_installed <- setdiff(to_be_installed, already_installed)
 
   if ( length(will_be_installed) == 0 ) {
     message("All required packages are installed")
     return(invisible(NULL))
   }
-  message("Installation of: ", will_be_installed)
+  message("Installation of: ", paste0(will_be_installed, collapse = ", "))
 
   install.packages(will_be_installed, ...)
 }

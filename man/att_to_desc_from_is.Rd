@@ -4,7 +4,13 @@
 \alias{att_to_desc_from_is}
 \title{Amend DESCRIPTION with dependencies from imports and suggests package list}
 \usage{
-att_to_desc_from_is(path.d = "DESCRIPTION", imports = NULL, suggests = NULL)
+att_to_desc_from_is(
+  path.d = "DESCRIPTION",
+  imports = NULL,
+  suggests = NULL,
+  normalize = TRUE,
+  add_remotes = FALSE
+)
 }
 \arguments{
 \item{path.d}{path to description file.}
@@ -12,6 +18,10 @@ att_to_desc_from_is(path.d = "DESCRIPTION", imports = NULL, suggests = NULL)
 \item{imports}{character vector of package names to add in Imports section}
 
 \item{suggests}{character vector of package names to add in Suggests section}
+
+\item{normalize}{Logical. Whether to normalize the DESCRIPTION file. See \code{\link[desc]{desc_normalize}}}
+
+\item{add_remotes}{Logical. Whether to add Remotes in DESCRIPTION when packages installed are from non-CRAN.}
 }
 \value{
 Fill in Description file

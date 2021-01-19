@@ -8,7 +8,9 @@ att_from_rmds(
   path = "vignettes",
   pattern = "*.[.](Rmd|rmd)$",
   recursive = TRUE,
-  warn = -1
+  warn = -1,
+  inside_rmd = FALSE,
+  inline = TRUE
 )
 }
 \arguments{
@@ -19,6 +21,11 @@ att_from_rmds(
 \item{recursive}{logical. Should the listing recurse into directories?}
 
 \item{warn}{-1 for quiet warnings with purl, 0 to see warnings}
+
+\item{inside_rmd}{Logical. Whether function is run inside a Rmd,
+in case this must be executed in an external R session}
+
+\item{inline}{Logical. Default TRUE. Whether to explore inline code for dependencies.}
 }
 \value{
 Character vector of packages called with library or require.

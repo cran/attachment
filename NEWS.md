@@ -1,3 +1,14 @@
+# attachment 0.2.0
+
+Breaking changes
+* `att_to_description()` deprecated in favor of `att_amend_desc` to be first in autocompletion list, as this is the most used function of this package.
+* `att_from_rmd()` gets parameter `inline = TRUE` by default to explore calls for packages in inline R code.
+* `att_from_rmd()` and `att_from_rmds()` are not anymore executed in separate R session by default. You must set `inside_rmd = TRUE` to do so.
+
+Minor
+* Add `find_remotes()` to help fill Remotes field in DESCRIPTION
+* `att_to_desc_from_is()` add parameter `normalize` to avoid problem with {desc}. (See https://github.com/r-lib/desc/issues/80)
+
 # attachment 0.1
 
 * `att_amend_desc()` is an alias for `att_to_description()`  

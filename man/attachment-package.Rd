@@ -20,17 +20,18 @@ Tools to help manage dependencies during package
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://thinkr-open.github.io/attachment/}
   \item \url{https://github.com/Thinkr-open/attachment}
   \item Report bugs at \url{https://github.com/Thinkr-open/attachment/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Vincent Guyader \email{vincent@thinkr.fr} (\href{https://orcid.org/0000-0003-0671-9270}{ORCID})
+\strong{Maintainer}: Sébastien Rochette \email{sebastien@thinkr.fr} (\href{https://orcid.org/0000-0002-1565-9313}{ORCID})
 
 Authors:
 \itemize{
-  \item Sébastien Rochette \email{sebastien@thinkr.fr} (\href{https://orcid.org/0000-0002-1565-9313}{ORCID})
+  \item Vincent Guyader \email{vincent@thinkr.fr} (\href{https://orcid.org/0000-0003-0671-9270}{ORCID}) (previous maintainer)
 }
 
 Other contributors:
