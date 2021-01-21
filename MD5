@@ -1,6 +1,6 @@
-19d50105fe311949a1e537104d03922b *DESCRIPTION
+60892699beedc3b5511b64a389d2655e *DESCRIPTION
 e02d276cde1ce8bd94b3c9a377155605 *NAMESPACE
-708543cf3b820717f4fbff3db01cb2ed *NEWS.md
+50de4af8dc4e3fa778d425853e5351ba *NEWS.md
 f96b238f6b545646c9679a97c096d07a *R/att_from_description.R
 c8824e80d985bd450322094fdb27723e *R/att_from_namespace.R
 f783afa50358897ce51acd3e8a7be0c9 *R/att_from_rmds.R
@@ -12,12 +12,12 @@ e0ef681901465d24f47f9139cb2c086a *R/attachment-package.R
 b39302d2bd1e76b9755c2807607730b6 *R/install_from_description.R
 8d2487dbf45064f33b08e5a80830b68e *R/utils-pipe.R
 e8590fee403bc68f91433ac5288dffef *R/zzz.R
-abaa25bc0aac31818ce84aa96490dc7e *README.md
+6bf1a5b7e66b7435f8bcd5d12e802c78 *README.md
 0b946bc746c142a68d9afbe1a796c7a0 *build/vignette.rds
 6777de20c2d9875783448710d672e3be *inst/dependencies.R
 fa64a29e5282a732885af441e339b54a *inst/doc/fill-pkg-description.R
 16857c0a18acddf7edaf27d9f82544e2 *inst/doc/fill-pkg-description.Rmd
-b781db078a3d0d5dba42f392db7764f6 *inst/doc/fill-pkg-description.html
+acbfb66ddcb837617def200957069ac8 *inst/doc/fill-pkg-description.html
 5e7bbd1819628988fb4ad3926d6b6cd4 *inst/dummypackage/DESCRIPTION
 ddc6e9bad297d9464b13884159aea5dc *inst/dummypackage/NAMESPACE
 1e5c839f8e9777a011bcab8c111add91 *inst/dummypackage/R/my_mean.R
@@ -51,7 +51,7 @@ f008e74069f0915e35091eb0b5314810 *tests/testthat/insidermd.Rmd
 cead68a2631e4d9b36c44a928877dd8d *tests/testthat/test-att_from_namespace.R
 07a9ffe66ea7412034150dc39a6b64b6 *tests/testthat/test-create_dependencies_file.R
 67932d29387adb160a66b134d7ea9804 *tests/testthat/test-install_from_description.R
-a3e13c7ed821d3da42f5e931bb26e153 *tests/testthat/test-rmd.R
+c7a4e0f6c4bf053c18dadc20647619e9 *tests/testthat/test-rmd.R
 07217eedd1bf31ff4001e3c6eedde988 *tests/testthat/test-rscript.R
 d92c173c620e24cbff83a97ef75f494b *tests/testthat/test-to-description.R
 16857c0a18acddf7edaf27d9f82544e2 *vignettes/fill-pkg-description.Rmd
