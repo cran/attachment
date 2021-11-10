@@ -1,3 +1,23 @@
+# attachment 0.2.3
+
+## Major changes
+
+* Allow to add Remotes field to DESCRIPTION with `set_remotes_to_desc()`
+
+## Minor changes
+
+* Check for packages names misspelled before filling DESCRIPTION.
+* Allow vector of R files in `att_from_rscripts()`
+* Move default git branch from master to main
+
+## Bug fixes 
+
+* Add NAMESPACE if missing with `att_amend_desc(document = TRUE)`
+* Add DESCRIPTION with empty skeleton if missing with `att_amend_desc()`
+* Default to remove NAMESPACE before updating to get rid of corrupted ones in `att_from_namespace()`
+* Fix detection of multiple render outputs in Rmd YAML with `att_from_rmd()`
+
+
 # attachment 0.2.1
 
 * Check for older pandoc version in tests

@@ -27,20 +27,20 @@ knitr::opts_chunk$set(
 library(attachment)
 ```
 
-## Use "devstuff_history.R"
+## Use "dev/dev_history.R"
 
-When building your package, create a file called "devstuff_history.R" in the root directory. You will store all "manual" calls to `devtools::xxx` and `usethis::xxx` in this script.  
+When building your package, create a file called "dev_history.R" in a "dev/" directory. You will store all "manual" calls to `devtools::xxx` and `usethis::xxx` in this script.  
 Its first line should be :
 
 ```r
-usethis::use_build_ignore("devstuff_history.R")
+usethis::use_build_ignore("dev")
 ```
 
 You can then call {attachment} in this file to help you build your description file.
 
 ## Fill your DESCRIPTION file
 ### For packages
-What you really want is to fill and update your description file along with the modifications of your documentation. Indeed, only this function will really be called in your "devstuff_history.R".  
+What you really want is to fill and update your description file along with the modifications of your documentation. Indeed, only this function will really be called in your "dev/dev_history.R".  
 Run `attachment::att_amend_desc()` each time before `devtools::check()`, this will save you some warnings and errors !
 
 ```{r, eval=FALSE}
@@ -72,16 +72,31 @@ attachment::att_to_desc_from_is(path.d = "DESCRIPTION",
 
 ### Propose content for "Remotes" field
 
-`find_remotes()` checks if packages were installed from other source than CRAN. 
-If so, it returns the content you can add to `Remotes:` field in DESCRIPTION.
+`set_remotes_to_desc()` adds packages that were installed from other source than CRAN to `Remotes:` field in DESCRIPTION.  
+
 For instance:
 
 - For GitHub : `Remotes: thinkr-open/attachment`
 - For GitLab : `Remotes: gitlab::jimhester/covr`
 
-You probably want to combine it to `att_from_description()`
+You may want to run it after `att_amend_desc()`.
+
+```{r eval=FALSE}
+att_amend_desc(dummypackage) %>%
+  set_remotes_to_desc()
+```
+
+If you only want to find if packages were installed from other source than CRAN, without amending DESCRIPTION, you can use `find_remotes()`.
+
+You can use it on a vector of packages names 
+```{r eval=TRUE}
+find_remotes(pkg = c("attachment", "desc", "glue"))
+```
+
+You may also want to combine it to `att_from_description()`
 ```{r, eval=FALSE}
-att_from_description() %>% find_remotes()
+att_from_description() %>%
+  find_remotes()
 ```
 
 

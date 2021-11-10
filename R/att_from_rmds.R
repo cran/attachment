@@ -11,6 +11,8 @@
 #' @importFrom stringr str_extract
 #' @importFrom knitr purl
 #'
+#' @return vector of character of packages names found in the Rmd
+#'
 #' @examples
 #'
 #' dummypackage <- system.file("dummypackage",package = "attachment")
@@ -49,7 +51,14 @@ att_from_rmd <- function(path, temp_dir = tempdir(), warn = -1,
   }
 
   # Add yaml to the file
-  yaml <- c("\n# yaml to parse \n", paste(unlist(rmarkdown::yaml_front_matter(path)$output), "\n", collapse = "\n"))
+  the_outputs <- rmarkdown::yaml_front_matter(path)$output
+  if (is.null(names(the_outputs))) {
+    yaml_pkg <- unlist(the_outputs)
+  } else {
+    yaml_pkg <- names(the_outputs)
+  }
+  yaml <- c("\n# yaml to parse \n",
+            paste(yaml_pkg, "\n"))
   cat(yaml, file = r_file, append = TRUE)
   att_from_rscript(r_file)
 }
@@ -81,7 +90,7 @@ att_from_rmds <- function(path = "vignettes",
   } else if (isTRUE(all(file.exists(path)))) {
     all_f <- normalizePath(path[grepl(pattern, path)])
   } else {
-    stop("Some file/directory do not exists")
+    stop("Some files/directories do not exist")
   }
 
   res <- lapply(all_f,

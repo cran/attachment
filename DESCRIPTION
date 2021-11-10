@@ -1,6 +1,6 @@
 Package: attachment
 Title: Deal with Dependencies
-Version: 0.2.1
+Version: 0.2.3
 Authors@R: 
     c(person(given = "Sébastien",
              family = "Rochette",
@@ -29,19 +29,19 @@ URL: https://thinkr-open.github.io/attachment/,
 BugReports: https://github.com/Thinkr-open/attachment/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
+Config/testthat/edition: 3
 Depends: R (>= 3.4)
 Imports: desc (>= 1.2.0), glue (>= 1.3.0), knitr (>= 1.20), magrittr
         (>= 1.5), rmarkdown (>= 1.10), roxygen2, stats, stringr (>=
         1.3.1), utils
-Suggests: testthat (>= 2.1.0)
+Suggests: testthat (>= 3.0.0)
 NeedsCompilation: no
-Packaged: 2021-01-20 11:11:43 UTC; srochett
+Packaged: 2021-11-10 15:28:51 UTC; srochett
 Author: Sébastien Rochette [cre, aut] (<https://orcid.org/0000-0002-1565-9313>),
   Vincent Guyader [aut] (<https://orcid.org/0000-0003-0671-9270>,
     previous maintainer),
   ThinkR [cph, fnd]
 Maintainer: Sébastien Rochette <sebastien@thinkr.fr>
 Repository: CRAN
-Date/Publication: 2021-01-21 17:20:23 UTC
+Date/Publication: 2021-11-10 15:50:14 UTC

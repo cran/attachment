@@ -24,8 +24,16 @@ att_amend_desc(path = dummypackage, inside_rmd = TRUE)
 #  attachment::att_to_desc_from_is(path.d = "DESCRIPTION",
 #                                  imports = imports, suggests = NULL)
 
+## ----eval=FALSE---------------------------------------------------------------
+#  att_amend_desc(dummypackage) %>%
+#    set_remotes_to_desc()
+
+## ----eval=TRUE----------------------------------------------------------------
+find_remotes(pkg = c("attachment", "desc", "glue"))
+
 ## ---- eval=FALSE--------------------------------------------------------------
-#  att_from_description() %>% find_remotes()
+#  att_from_description() %>%
+#    find_remotes()
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  att_from_namespace()
