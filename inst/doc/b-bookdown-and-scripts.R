@@ -8,6 +8,9 @@ knitr::opts_chunk$set(
 library(attachment)
 
 ## ---- eval=FALSE--------------------------------------------------------------
+#  usethis::use_description()
+
+## ---- eval=FALSE--------------------------------------------------------------
 #  # bookdown Imports are in Rmds
 #  imports <- c("bookdown", attachment::att_from_rmds("."))
 #  
@@ -18,7 +21,8 @@ library(attachment)
 #  )
 
 ## ---- eval=FALSE--------------------------------------------------------------
-#  remotes::install_local()
+#  # install.packages("remotes")
+#  remotes::install_deps()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  attachment::att_to_desc_from_is(

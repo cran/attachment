@@ -6,7 +6,7 @@
 \usage{
 att_from_rmds(
   path = "vignettes",
-  pattern = "*.[.](Rmd|rmd)$",
+  pattern = "*.[.](Rmd|rmd|qmd)$",
   recursive = TRUE,
   warn = -1,
   inside_rmd = FALSE,
@@ -30,7 +30,7 @@ in case this must be executed in an external R session}
 \value{
 Character vector of packages called with library or require.
 {knitr} and {rmarkdown} are added by default to allow building the vignettes
- if the directory contains "vignettes" in the path
+if the directory contains "vignettes" in the path
 }
 \description{
 Get all packages called in vignettes folder

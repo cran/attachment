@@ -2,7 +2,7 @@
 #'
 #' @param path path to the DESCRIPTION file
 #' @param field DESCRIPTION fields to parse, "Depends", "Imports", "Suggests" by default
-#' @param ...  Arguments to be passed to \code{\link[utils]{install.packages}}
+#' @param ...  Arguments to be passed to [utils::install.packages()]
 #' @export
 #' @return Used for side effect. Installs R packages from DESCRIPTION file if missing.
 #' @examples
@@ -22,7 +22,7 @@ install_from_description <- function(path = "DESCRIPTION", field = c("Depends", 
 #' install  packages if missing
 #'
 #' @param to_be_installed a character vector containing required packages names
-#' @param ...  Arguments to be passed to \code{\link[utils]{install.packages}}
+#' @param ...  Arguments to be passed to [utils::install.packages()]
 #'
 #' @importFrom utils install.packages
 #'
@@ -34,7 +34,7 @@ install_from_description <- function(path = "DESCRIPTION", field = c("Depends", 
 #' }
 #'
 install_if_missing <- function(to_be_installed, ...) {
-  already_installed <- basename(try(find.package(to_be_installed, quiet = TRUE), silent = TRUE))
+  already_installed <- basename(try(find.package(to_be_installed, quiet = TRUE,lib.loc = .libPaths()), silent = TRUE))
   will_be_installed <- setdiff(to_be_installed, already_installed)
 
   if ( length(will_be_installed) == 0 ) {

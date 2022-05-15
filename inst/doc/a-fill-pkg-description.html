@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sébastien Rochette" />
 
-<meta name="date" content="2021-11-15" />
+<meta name="date" content="2022-05-15" />
 
 <title>a-Help during package development</title>
 
@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -333,7 +334,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">a-Help during package development</h1>
 <h4 class="author">Sébastien Rochette</h4>
-<h4 class="date">2021-11-15</h4>
+<h4 class="date">2022-05-15</h4>
 
 
 
@@ -348,19 +349,28 @@ $(document).ready(function () {
 </div>
 <div id="use-devdev_history.r" class="section level2">
 <h2>Use “dev/dev_history.R”</h2>
-<p>When building your package, create a file called “dev_history.R” in a “dev/” directory. You will store all “manual” calls to <code>devtools::xxx</code> and <code>usethis::xxx</code> in this script.<br />
+<p>When building your package, create a file called “dev_history.R” in a
+“dev/” directory. You will store all “manual” calls to
+<code>devtools::xxx</code> and <code>usethis::xxx</code> in this
+script.<br />
 Its first line should be :</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_build_ignore</span>(<span class="st">&quot;dev&quot;</span>)</span></code></pre></div>
-<p>You can then call {attachment} in this file to help you build your description file.</p>
+<p>You can then call {attachment} in this file to help you build your
+description file.</p>
 </div>
 <div id="fill-your-description-file" class="section level2">
 <h2>Fill your DESCRIPTION file</h2>
-<p>What you really want is to fill and update your description file along with the modifications of your documentation. Indeed, only this function will really be called in your “dev/dev_history.R”.<br />
-Run <code>attachment::att_amend_desc()</code> each time before <code>devtools::check()</code>, this will save you some warnings and errors !</p>
+<p>What you really want is to fill and update your description file
+along with the modifications of your documentation. Indeed, only this
+function will really be called in your “dev/dev_history.R”.<br />
+Run <code>attachment::att_amend_desc()</code> each time before
+<code>devtools::check()</code>, this will save you some warnings and
+errors !</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">att_amend_desc</span>()</span></code></pre></div>
 <div id="example-on-a-fake-package" class="section level4">
 <h4>Example on a fake package</h4>
-<p>If you are running this inside a Rmd like here, you may need parameter <code>inside_rmd = TRUE</code>.</p>
+<p>If you are running this inside a Rmd like here, you may need
+parameter <code>inside_rmd = TRUE</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy package in a temporary directory</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>tmpdir <span class="ot">&lt;-</span> <span class="fu">tempdir</span>()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">system.file</span>(<span class="st">&quot;dummypackage&quot;</span>,<span class="at">package =</span> <span class="st">&quot;attachment&quot;</span>), tmpdir, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
@@ -369,7 +379,7 @@ Run <code>attachment::att_amend_desc()</code> each time before <code>devtools::c
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># browseURL(dummypackage)</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">att_amend_desc</span>(<span class="at">path =</span> dummypackage, <span class="at">inside_rmd =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Updating dummypackage documentation</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Updating roxygen version in /tmp/RtmpZSVjAZ/dummypackage/DESCRIPTION</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Updating roxygen version in /tmp/RtmpCnwEnR/dummypackage/DESCRIPTION</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Loading dummypackage</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Writing NAMESPACE</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Writing NAMESPACE</span></span>
@@ -380,7 +390,9 @@ Run <code>attachment::att_amend_desc()</code> each time before <code>devtools::c
 </div>
 <div id="propose-content-for-remotes-field" class="section level2">
 <h2>Propose content for “Remotes” field</h2>
-<p><code>set_remotes_to_desc()</code> adds packages that were installed from other source than CRAN to <code>Remotes:</code> field in DESCRIPTION.</p>
+<p><code>set_remotes_to_desc()</code> adds packages that were installed
+from other source than CRAN to <code>Remotes:</code> field in
+DESCRIPTION.</p>
 <p>For instance:</p>
 <ul>
 <li>For GitHub : <code>Remotes: thinkr-open/attachment</code></li>
@@ -389,21 +401,29 @@ Run <code>attachment::att_amend_desc()</code> each time before <code>devtools::c
 <p>You may want to run it after <code>att_amend_desc()</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">att_amend_desc</span>(dummypackage) <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_remotes_to_desc</span>()</span></code></pre></div>
-<p>If you only want to find if packages were installed from other source than CRAN, without amending DESCRIPTION, you can use <code>find_remotes()</code>.</p>
+<p>If you only want to find if packages were installed from other source
+than CRAN, without amending DESCRIPTION, you can use
+<code>find_remotes()</code>.</p>
 <p>You can use it on a vector of packages names</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find_remotes</span>(<span class="at">pkg =</span> <span class="fu">c</span>(<span class="st">&quot;attachment&quot;</span>, <span class="st">&quot;desc&quot;</span>, <span class="st">&quot;glue&quot;</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $attachment</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; local maybe ? </span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            NA</span></span></code></pre></div>
-<p>You may also want to combine it to <code>att_from_description()</code></p>
+<p>You may also want to combine it to
+<code>att_from_description()</code></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">att_from_description</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">find_remotes</span>()</span></code></pre></div>
 </div>
 <div id="create-a-file-for-package-installation" class="section level2">
 <h2>Create a file for package installation</h2>
-<p>Once your package is finished. Well, is a package ever finished ? Let’s say, once you want to release a version of your package, you may want to deliver the list of dependencies your users will have to install. A little script like <code>install.packages(c(...all dep...))</code> would be so nice :</p>
+<p>Once your package is finished. Well, is a package ever finished ?
+Let’s say, once you want to release a version of your package, you may
+want to deliver the list of dependencies your users will have to
+install. A little script like
+<code>install.packages(c(...all dep...))</code> would be so nice :</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_dependencies_file</span>()</span></code></pre></div>
-<p>This file will be placed in <code>inst/dependencies.R</code> and contains :</p>
+<p>This file will be placed in <code>inst/dependencies.R</code> and
+contains :</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No Remotes ----</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;ThinkR-open/fcuk&quot;)</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Attachments ----</span></span>
@@ -418,7 +438,9 @@ Run <code>attachment::att_amend_desc()</code> each time before <code>devtools::c
 </div>
 <div id="other-possibilities" class="section level2">
 <h2>Other possibilities</h2>
-<p>Of course, you can also use {attachment} out of a package to list all package dependencies of R scripts using <code>att_from_rscripts()</code> or Rmd files using <code>att_from_rmds()</code>.</p>
+<p>Of course, you can also use {attachment} out of a package to list all
+package dependencies of R scripts using <code>att_from_rscripts()</code>
+or Rmd files using <code>att_from_rmds()</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dummypackage <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;dummypackage&quot;</span>, <span class="at">package =</span> <span class="st">&quot;attachment&quot;</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">att_from_rscripts</span>(<span class="at">path =</span> <span class="fu">file.path</span>(dummypackage, <span class="st">&quot;R&quot;</span>))</span>
