@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sébastien Rochette" />
 
-<meta name="date" content="2022-05-15" />
+<meta name="date" content="2022-09-15" />
 
 <title>Bookdown, quarto and other scripts dependencies</title>
 
@@ -122,13 +122,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -335,7 +342,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Bookdown, quarto and other scripts
 dependencies</h1>
 <h4 class="author">Sébastien Rochette</h4>
-<h4 class="date">2022-05-15</h4>
+<h4 class="date">2022-09-15</h4>
 
 
 
@@ -376,7 +383,11 @@ GitHub Actions. See for instance, the GitLab CI workflows in {gitlabr}:
 <li>Fill the “DESCRIPTION” file using
 <code>attachment::att_to_desc_from_is()</code>. <em>Note that to include
 it directly in CI (as proposed in {gitlabr} templates), you may need to
-set <code>att_to_desc_from_is(must.exist = FALSE)</code>.</em></li>
+set <code>att_to_desc_from_is(must.exist = FALSE)</code>.</em><br />
+<em>Note that <code>att_from_rmds()</code> also works for “.qmd”
+documents. You can use <code>att_from_qmds()</code> if you want,
+although for now there is no difference and it will also parse “.Rmd”
+documents.</em></li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bookdown Imports are in Rmds</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>imports <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;bookdown&quot;</span>, attachment<span class="sc">::</span><span class="fu">att_from_rmds</span>(<span class="st">&quot;.&quot;</span>))</span>
