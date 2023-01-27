@@ -29,6 +29,7 @@ extra_dev_pkg <- c(
 #' detecting packages in DESCRIPTION.
 #' @param pkg_ignore Vector of packages to ignore from being discovered in your files.
 #' This does not prevent them to be in "renv.lock" if they are recursive dependencies.
+#' @inheritParams att_to_desc_from_is
 #' @param ... Other arguments to pass to [renv::snapshot()]
 #'
 #' @return a renv.lock file
@@ -50,6 +51,7 @@ create_renv_for_dev <- function(path = ".",
                                 install_if_missing = TRUE,
                                 document = TRUE,
                                 pkg_ignore = NULL,
+                                check_if_suggests_is_installed = TRUE,
                                 ...) {
 
   if (!requireNamespace("renv")) {
@@ -66,12 +68,22 @@ create_renv_for_dev <- function(path = ".",
   }
 
   if (isTRUE(document)) {
-    att_amend_desc(path)
+    att_amend_desc(path, check_if_suggests_is_installed = check_if_suggests_is_installed)
+  }
+
+  if ( isTRUE(check_if_suggests_is_installed)){
+
+  fields <- c("Depends", "Imports", "Suggests")
+
+  } else {
+
+  fields <- c("Depends", "Imports")
+
   }
 
   pkg_list <- unique(
     c(
-      att_from_description(path = file.path(path, "DESCRIPTION")),
+      att_from_description(path = file.path(path, "DESCRIPTION"),field = fields),
       dev_pkg
     )
   )
@@ -136,12 +148,17 @@ create_renv_for_dev <- function(path = ".",
 
 #' @export
 #' @rdname create_renv_for_dev
-create_renv_for_prod <- function(path = ".", output = "renv.lock.prod", dev_pkg = "remotes", ...) {
+create_renv_for_prod <- function(path = ".",
+                                 output = "renv.lock.prod",
+                                 dev_pkg = "remotes",
+                                 check_if_suggests_is_installed = FALSE,
+                                 ...) {
   create_renv_for_dev(
     path = path,
     dev_pkg = dev_pkg,
     folder_to_include = NULL,
     output = output,
+    check_if_suggests_is_installed = check_if_suggests_is_installed,
     ...
   )
 }

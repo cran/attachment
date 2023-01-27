@@ -8,6 +8,7 @@ att_to_desc_from_is(
   path.d = "DESCRIPTION",
   imports = NULL,
   suggests = NULL,
+  check_if_suggests_is_installed = TRUE,
   normalize = TRUE,
   must.exist = TRUE
 )
@@ -18,6 +19,8 @@ att_to_desc_from_is(
 \item{imports}{character vector of package names to add in Imports section}
 
 \item{suggests}{character vector of package names to add in Suggests section}
+
+\item{check_if_suggests_is_installed}{Logical. Whether to require that packages in the Suggests section are installed.}
 
 \item{normalize}{Logical. Whether to normalize the DESCRIPTION file. See \code{\link[desc:desc_normalize]{desc::desc_normalize()}}}
 
@@ -38,15 +41,20 @@ When used in CI to discover dependencies, for a bookdown for instance,
 you may want to set to \code{FALSE} (no message at all) or \code{NA} (warning for not installed).
 }
 \examples{
-tmpdir <- tempdir()
+tmpdir <- tempfile(pattern = "descfromis")
+dir.create(tmpdir)
 file.copy(system.file("dummypackage",package = "attachment"), tmpdir,
  recursive = TRUE)
 dummypackage <- file.path(tmpdir, "dummypackage")
 # browseURL(dummypackage)
 att_to_desc_from_is(path.d = file.path(dummypackage, "DESCRIPTION"),
 imports = c("magrittr", "attachment"), suggests = c("knitr"))
+
 # In combination with other functions
 att_to_desc_from_is(path.d = file.path(dummypackage, "DESCRIPTION"),
 imports = att_from_rscripts(file.path(dummypackage, "R")),
 suggests = att_from_rmds(file.path(dummypackage, "vignettes")))
+
+# Clean temp files after this example
+unlink(tmpdir, recursive = TRUE)
 }

@@ -44,6 +44,40 @@ test_that("find_remotes does not fail with packages installation errors", {
 
 # Test core of find_remotes ----
 test_that("extract_pkg_info extracts code", {
+
+  # R-universe from tar.gz
+  # One day, maybe we can specify to use r-universe by default
+  fake_desc_universe <- list(
+    list(
+      RemoteType = "url",
+      Repository = "https://thinkr-open.r-universe.dev",
+      RemoteUrl = "https://thinkr-open.r-universe.dev/src/contrib/fusen_0.4.0.9000.tar.gz",
+      RemoteRef = "HEAD",
+      RemoteSha = "bfd6867bdc00976206479d5e784cdc9f057e0991",
+      Package = "fusen"
+    )
+  ) %>% setNames("fusen")
+  expect_equal(
+    extract_pkg_info(fake_desc_universe)[["fusen"]],
+    c("r-universe: need to set options to repos=\"https://thinkr-open.r-universe.dev\"" = NA))
+  #"universe::thinkr-open/fusen"
+
+  # R-universe from repos changed
+  fake_desc_universe2 <- list(
+    list(
+      Repository = "https://thinkr-open.r-universe.dev",
+      RemoteUrl = "https://github.com/ThinkR-open/fusen",
+      RemoteRef = "HEAD",
+      RemoteSha = "bfd6867bdc00976206479d5e784cdc9f057e0991",
+      Version = "0.4.0.9000",
+      Package = "fusen"
+    )
+  ) %>% setNames("fusen")
+  expect_equal(
+    extract_pkg_info(fake_desc_universe2)[["fusen"]],
+    c("r-universe: need to set options to repos=\"https://thinkr-open.r-universe.dev\"" = NA))
+  #"universe::thinkr-open/fusen"
+
   # Github
   fake_desc_github <- list(
     list(
@@ -135,7 +169,8 @@ test_that("extract_pkg_info extracts code", {
   expect_equal(names(extract_pkg_info(fake_desc_other)[["fakenull"]]), "local maybe ?")
 
   # Test internal_remotes_to_desc ----
-  tmpdir <- tempdir()
+  tmpdir <- tempfile(pattern = "pkginternalremotes")
+  dir.create(tmpdir)
   file.copy(system.file("dummypackage",package = "attachment"), tmpdir, recursive = TRUE)
   dummypackage <- file.path(tmpdir, "dummypackage")
 
@@ -248,11 +283,12 @@ test_that("extract_pkg_info extracts code", {
   new_desc_null <- readLines(path.d)
   expect_false(any(grepl("Remotes", new_desc_null)))
 
-  unlink(dummypackage, recursive = TRUE)
+  unlink(tmpdir, recursive = TRUE)
 })
 
 # test set_remotes_to_desc ----
-tmpdir <- tempdir()
+tmpdir <- tempfile(pattern = "pkgset")
+dir.create(tmpdir)
 file.copy(system.file("dummypackage",package = "attachment"), tmpdir, recursive = TRUE)
 dummypackage <- file.path(tmpdir, "dummypackage")
 
@@ -303,5 +339,5 @@ test_that("set_remotes_to_desc return nothing if local installs", {
   )
 
 })
-unlink(dummypackage, recursive = TRUE)
+unlink(tmpdir, recursive = TRUE)
 

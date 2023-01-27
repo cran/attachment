@@ -13,6 +13,7 @@ create_renv_for_dev(
   install_if_missing = TRUE,
   document = TRUE,
   pkg_ignore = NULL,
+  check_if_suggests_is_installed = TRUE,
   ...
 )
 
@@ -20,6 +21,7 @@ create_renv_for_prod(
   path = ".",
   output = "renv.lock.prod",
   dev_pkg = "remotes",
+  check_if_suggests_is_installed = FALSE,
   ...
 )
 }
@@ -42,6 +44,8 @@ detecting packages in DESCRIPTION.}
 
 \item{pkg_ignore}{Vector of packages to ignore from being discovered in your files.
 This does not prevent them to be in "renv.lock" if they are recursive dependencies.}
+
+\item{check_if_suggests_is_installed}{Logical. Whether to require that packages in the Suggests section are installed.}
 
 \item{...}{Other arguments to pass to \code{\link[renv:snapshot]{renv::snapshot()}}}
 }

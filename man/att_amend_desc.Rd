@@ -17,7 +17,8 @@ att_amend_desc(
   document = TRUE,
   normalize = TRUE,
   inside_rmd = FALSE,
-  must.exist = TRUE
+  must.exist = TRUE,
+  check_if_suggests_is_installed = TRUE
 )
 
 att_to_desc_from_pkg(
@@ -32,7 +33,8 @@ att_to_desc_from_pkg(
   document = TRUE,
   normalize = TRUE,
   inside_rmd = FALSE,
-  must.exist = TRUE
+  must.exist = TRUE,
+  check_if_suggests_is_installed = TRUE
 )
 }
 \arguments{
@@ -61,6 +63,8 @@ in case this must be executed in an external R session}
 
 \item{must.exist}{Logical. If TRUE then an error is given if packages do not exist
 within installed packages. If NA, a warning.}
+
+\item{check_if_suggests_is_installed}{Logical. Whether to require that packages in the Suggests section are installed.}
 }
 \value{
 Update DESCRIPTION file.
@@ -72,10 +76,14 @@ att_to_desc_from_pkg() is an alias of att_amend_desc(),
 for the correspondence with \code{\link[=att_to_desc_from_is]{att_to_desc_from_is()}}.
 }
 \examples{
-tmpdir <- tempdir()
+tmpdir <- tempfile(pattern = "description")
+dir.create(tmpdir)
 file.copy(system.file("dummypackage",package = "attachment"), tmpdir,
  recursive = TRUE)
 dummypackage <- file.path(tmpdir, "dummypackage")
 # browseURL(dummypackage)
-att_amend_desc(path = dummypackage)
+att_amend_desc(path = tmpdir)
+
+# Clean after examples
+unlink(tmpdir, recursive = TRUE)
 }

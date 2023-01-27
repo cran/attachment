@@ -72,26 +72,70 @@ common call for your development packages would be:
 attachment::att_amend_desc(extra.suggests = c("pkgdown", "covr"))
 ```
 
-*Note: `attachment::att_to_description()` is Deprecated.*
+If you would like to add dependencies in the “Remotes” field of your
+DESCRIPTION file, to mimic your local installation, you will want to
+use:
+
+``` r
+attachment::set_remotes_to_desc()
+```
 
 #### Example on a fake package
 
 ``` r
 # Copy package in a temporary directory
-tmpdir <- tempdir()
+tmpdir <- tempfile(pattern = "fakepkg")
+dir.create(tmpdir)
 file.copy(system.file("dummypackage",package = "attachment"), tmpdir, recursive = TRUE)
 #> [1] TRUE
 dummypackage <- file.path(tmpdir, "dummypackage")
 # browseURL(dummypackage)
-att_amend_desc(path = dummypackage, inside_rmd = TRUE)
+
+# Fill the DESCRIPTION file automatically
+desc_file <- attachment::att_amend_desc(path = dummypackage, inside_rmd = TRUE)
 #> Updating dummypackage documentation
-#> Updating roxygen version in /tmp/RtmpK2L9Ud/dummypackage/DESCRIPTION
+#> ────────────────────────────────────────────────────────────────────────────────
+#> Changes in roxygen2 7.0.0:
+#> * `%` is now escaped automatically in Markdown mode.
+#> Please carefully check .Rd files for changes
+#> ────────────────────────────────────────────────────────────────────────────────
+#> 
+#> Setting `RoxygenNote` to "7.2.2"
 #> ℹ Loading dummypackage
-#> Writing NAMESPACE
-#> Writing NAMESPACE
+#> Writing ']8;;file:///tmp/Rtmpe9Zik8/fakepkg4c0f84cd8072f/dummypackage/NAMESPACENAMESPACE]8;;'
+#> Writing ']8;;file:///tmp/Rtmpe9Zik8/fakepkg4c0f84cd8072f/dummypackage/NAMESPACENAMESPACE]8;;'
+#> ℹ Loading dummypackage
 #> Package(s) Rcpp is(are) in category 'LinkingTo'. Check your Description file to be sure it is really what you want.
+#> 
 #> [-] 1 package(s) removed: utils.
+#> 
 #> [+] 2 package(s) added: stats, glue.
+
+# Add Remotes if you have some installed
+attachment::set_remotes_to_desc(path.d = desc_file)
+#> There are no remote packages installed on your computer to add to description
+#> NULL
+
+# Clean state
+unlink(tmpdir, recursive = TRUE)
+```
+
+#### More on finding Remotes repositories (non installed from CRAN)
+
+Find packages installed out of CRAN. This helps fill the “Remotes” field
+in DESCRIPTION file with `set_remotes_to_desc()`.  
+Behind the scene, it uses `fund_remotes()`.
+
+- See the examples below if {fusen} is installed from GitHub
+  - Also works for GitLab, Bioconductor, Git, Local installations
+
+``` r
+# From GitHub
+remotes::install_github("ThinkR-open/fusen",
+                        quiet = TRUE, upgrade = "never")
+attachment::find_remotes("fusen")
+#> $fusen
+#> [1] "ThinkR-open/fusen"
 ```
 
 ### For installation
