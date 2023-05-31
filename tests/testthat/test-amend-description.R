@@ -5,7 +5,16 @@ dir.create(tmpdir)
 file.copy(system.file("dummypackage",package = "attachment"), tmpdir, recursive = TRUE)
 dummypackage <- file.path(tmpdir, "dummypackage")
 # browseURL(dummypackage)
+
+user_warn <- getOption("warn")
 att_amend_desc(path = dummypackage)
+
+test_that("att_amend_desc does not change warn level", {
+  new_warn <- getOption("warn")
+  expect_equal(new_warn, user_warn)
+})
+
+
 desc_file <- readLines(file.path(tmpdir, "dummypackage", "DESCRIPTION"))
 namespace_file <- readLines(file.path(tmpdir, "dummypackage", "NAMESPACE"))
 
@@ -45,7 +54,8 @@ cat(
   "Remotes:
     thinkr-open/fusen,
     tidyverse/magrittr,
-    rstudio/rmarkdown
+    rstudio/rmarkdown@branch,
+    git::https://github.com/yihui/knitr@main
 ", append = TRUE,
   file = path.d)
 
@@ -57,8 +67,9 @@ test_that("Remotes stays here if exists and package in imports/suggests", {
   expect_false(any(grepl("thinkr-open/fusen", desc_file))) # not in deps
   w.remotes <- grep('Remotes:', desc_file)
   expect_length(w.remotes, 1)
-  expect_equal(desc_file[w.remotes + 1], "    rstudio/rmarkdown,") #suggest
-  expect_equal(desc_file[w.remotes + 2], "    tidyverse/magrittr") #imports
+  expect_equal(desc_file[w.remotes + 1], "    git::https://github.com/yihui/knitr@main,") #imports
+  expect_equal(desc_file[w.remotes + 2], "    rstudio/rmarkdown@branch,") #suggest
+  expect_equal(desc_file[w.remotes + 3], "    tidyverse/magrittr") #imports
 })
 unlink(dummypackage, recursive = TRUE)
 
@@ -99,27 +110,32 @@ test_that("fails if dir.t do not exists", {
 
   expect_error(
     att_amend_desc(path = dummypackage,
-                   dir.r = "rara"), # do not exist, nothing fails
+                   dir.r = "rara", # do not exist, nothing fails
+                   use.config = FALSE),
     regexp = NA)
 
   expect_message(
     att_amend_desc(path = dummypackage,
-                   dir.v = c("vignettes", "vava")),
+                   dir.v = c("vignettes", "vava"),
+                   use.config = FALSE),
     regexp = "There is no directory named: vava")
 
   expect_error(
     att_amend_desc(path = dummypackage,
-                   dir.v = "vava"), # do not exist, nothing fails
+                   dir.v = "vava",
+                   update.config = TRUE), # do not exist, nothing fails
     regexp = NA)
 
   expect_message(
     att_amend_desc(path = dummypackage,
-                   dir.t = c("tests", "tata")),
+                   dir.t = c("tests", "tata"),
+                   update.config = TRUE),
     regexp = "There is no directory named: tata")
 
   expect_error(
     att_amend_desc(path = dummypackage,
-                   dir.t = "tata"), # do not exist, nothing fails
+                   dir.t = "tata",
+                   update.config = TRUE), # do not exist, nothing fails
     regexp = NA)
 })
 unlink(dummypackage, recursive = TRUE)
@@ -208,6 +224,7 @@ file.copy(system.file("dummypackage",package = "attachment"), tmpdir, recursive 
 dummypackage <- file.path(tmpdir, "dummypackage")
 # browseURL(dummypackage)
 file.remove(file.path(dummypackage, "NAMESPACE"))
+
 test_that("Works with missing DESCRIPTION", {
   expect_false(file.exists(file.path(dummypackage, "NAMESPACE")))
   expect_error(att_from_namespace(file.path(dummypackage, "NAMESPACE")), "attachment::att_amend_desc()")
@@ -216,7 +233,7 @@ test_that("Works with missing DESCRIPTION", {
                  "no directory named: NAMESPACE")
   expect_false(file.exists(file.path(dummypackage, "NAMESPACE")))
 
-  expect_message(att_amend_desc(path = dummypackage), "new path.n")
+  expect_message(att_amend_desc(path = dummypackage, document = TRUE, update.config = TRUE), "new path.n")
   expect_true(file.exists(file.path(dummypackage, "NAMESPACE")))
 
 })
@@ -401,8 +418,8 @@ my_length <- function(x) {
   dir.create(file.path(dummypackage, "dev"))
   writeLines(
     text = paste0(
-      "devtools::install('", getwd(), "')\n",
-      "attachment::att_amend_desc()
+      "pkgload::load_all('", getwd(), "')\n",
+      "att_amend_desc()
 # This should work without error
 my_length(1)
 
@@ -470,3 +487,4 @@ library(ggplot3)
   # Clean after
   unlink(dummypackage, recursive = TRUE)
 })
+

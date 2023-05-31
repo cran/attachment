@@ -10,6 +10,28 @@ library(attachment)
 ## ---- eval=FALSE--------------------------------------------------------------
 #  att_amend_desc()
 
+## ---- eval=FALSE--------------------------------------------------------------
+#  att_amend_desc(pkg_ignore = c("fakepackage.to_ignore", "other.package"), update.config = TRUE)
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  att_amend_desc(extra.suggests = c("suggested.package.not.detected"), update.config = TRUE)
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  att_amend_desc(pkg_ignore = c("package.to.move"), extra.suggests = c("package.to.move"), update.config = TRUE)
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  att_amend_desc(extra.suggests = c("bookdown"), update.config = TRUE)
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  #' Knit my internal template
+#  #'
+#  #' @importFrom bookdown html_document2
+#  #' @export
+#  #'
+#  my_knit <- function() {
+#    rmarkdown::render(system.file("my_template.Rmd", package = "my.package"))
+#  }
+
 ## -----------------------------------------------------------------------------
 # Copy package in a temporary directory
 tmpdir <- tempfile(pattern = "insidermd")
@@ -17,7 +39,7 @@ dir.create(tmpdir)
 file.copy(system.file("dummypackage",package = "attachment"), tmpdir, recursive = TRUE)
 dummypackage <- file.path(tmpdir, "dummypackage")
 # browseURL(dummypackage)
-att_amend_desc(path = dummypackage, inside_rmd = TRUE)
+att_amend_desc(path = dummypackage, inside_rmd = TRUE, update.config = TRUE)
 
 # Clean temp files after this example
 unlink(tmpdir, recursive = TRUE)

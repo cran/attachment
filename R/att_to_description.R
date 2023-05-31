@@ -12,6 +12,9 @@
 #' @param dir.t path to tests directory. Set to empty (dir.t = "") to ignore.
 #' @param extra.suggests vector of other packages that should be added in Suggests (pkgdown, covr for instance)
 #' @param pkg_ignore vector of packages names to ignore.
+#' @param update.config logical. Should the parameters used in this call be saved in the config file of the package
+#' @param use.config logical. Should the command use the parameters from the config file to run
+#' @param path.c character Path to the yaml config file where parameters are saved
 #'
 #' @inheritParams att_from_namespace
 #' @inheritParams att_to_desc_from_is
@@ -21,15 +24,43 @@
 #'
 #' @return Update DESCRIPTION file.
 #'
+#' @details
+#'
+#' Your daily use is to run `att_amend_desc()`, as is.
+#' You will want to run this function sometimes with some extra information like
+#' `att_amend_desc(pkg_ignore = "x", update.config = TRUE)` if you have to update
+#' the configuration file.
+#' Next time `att_amend_desc()` will use these parameters from the configuration
+#' file directly.
+#'
+#'
 #' @export
 #' @examples
+#'
+#' # Run on an external "dummypackage" as an example
+#' # For your local use, you do not have to specify the `path` as below
+#' # By default, `att_amend_desc()` will run on the current working directory
+#'
+#' # Create a fake package for the example
 #' tmpdir <- tempfile(pattern = "description")
 #' dir.create(tmpdir)
 #' file.copy(system.file("dummypackage",package = "attachment"), tmpdir,
 #'  recursive = TRUE)
 #' dummypackage <- file.path(tmpdir, "dummypackage")
-#' # browseURL(dummypackage)
-#' att_amend_desc(path = tmpdir)
+#'
+#' # Update documentation and dependencies
+#' att_amend_desc(path = dummypackage)
+#'
+#' # You can look at the content of this external package
+#' #' # browseURL(dummypackage)
+#'
+#' # Update the config file with extra parameters
+#' # We recommend that you store this code in a file in your "dev/" directory
+#' # to run it when needed
+#' att_amend_desc(path = dummypackage, extra.suggests = "testthat", update.config = TRUE)
+#'
+#' # Next time, in your daily development
+#' att_amend_desc(path = dummypackage)
 #'
 #' # Clean after examples
 #' unlink(tmpdir, recursive = TRUE)
@@ -46,11 +77,11 @@ att_amend_desc <- function(path = ".",
                            normalize = TRUE,
                            inside_rmd = FALSE,
                            must.exist = TRUE,
-                           check_if_suggests_is_installed = TRUE
+                           check_if_suggests_is_installed = TRUE,
+                           update.config = FALSE,
+                           use.config = TRUE,
+                           path.c = "dev/config_attachment.yaml"
 ) {
-
-
-  save_all()
 
   if (path != ".") {
     old <- setwd(normalizePath(path))
@@ -59,6 +90,34 @@ att_amend_desc <- function(path = ".",
 
   path <- normalizePath(path)
 
+  # decide whether to use or update config file ----
+  if (isTRUE(update.config) & isTRUE(use.config)) {
+    use.config <- FALSE
+    message("'update.config' was set to TRUE, hence, 'use.config' was forced to FALSE")
+  }
+
+  # extract all current parameter values - ignore config parameters - save also default
+  att_params <- names(formals(att_amend_desc))
+  att_params <- att_params[!att_params %in% c("path", "update.config", "use.config", "path.c")]
+  local_att_params <- mget(att_params)
+
+  params_to_load <- compare_inputs_load_or_save(
+    path.c = path.c,
+    local_att_params = local_att_params,
+    use.config = use.config,
+    update.config = update.config)
+
+  if (!is.null(params_to_load)) {
+    for (param_name in names(params_to_load)){
+      assign(param_name, params_to_load[[param_name]])
+    }
+    message(c("Documentation parameters were restored from attachment config file."))
+  }
+
+  # Save all open files ----
+  save_all()
+
+  # Update description ----
   if (!file.exists(path.d)) {
     x3 <- description$new("!new")
     x3$set("Package", basename(path))
@@ -278,7 +337,7 @@ att_to_desc_from_is <- function(path.d = "DESCRIPTION", imports = NULL,
 
   remotes_orig <- desc$get_remotes()
   if (length(remotes_orig) != 0) {
-    remotes_orig_pkg <- gsub("^.*/|[.]git", "", remotes_orig)
+    remotes_orig_pkg <- gsub("^.*/|[.]git|@.*$", "", remotes_orig)
   } else {
     remotes_orig_pkg <- NULL
   }
