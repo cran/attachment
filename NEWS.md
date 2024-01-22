@@ -1,3 +1,9 @@
+# attachment 0.4.1
+
+## Bug fixes 
+
+- Modification of unit tests following {roxygen2} changes. `att_amend_desc` and `att_from_namespace` return messages instead of warnings. (@MurielleDelmotte) 
+
 # attachment 0.4.0
 
 ## Breaking changes

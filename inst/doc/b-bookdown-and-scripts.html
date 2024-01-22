@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sébastien Rochette" />
 
-<meta name="date" content="2023-05-31" />
+<meta name="date" content="2024-01-22" />
 
 <title>Bookdown, quarto and other scripts dependencies</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Bookdown, quarto and other scripts
 dependencies</h1>
 <h4 class="author">Sébastien Rochette</h4>
-<h4 class="date">2023-05-31</h4>
+<h4 class="date">2024-01-22</h4>
 
 
 
@@ -352,7 +352,7 @@ $(document).ready(function () {
 </script>
 <div id="load-package-attachment" class="section level2">
 <h2>Load package {attachment}</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(attachment)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(attachment)</span></code></pre></div>
 </div>
 <div id="use-devdev_history.r" class="section level2">
 <h2>Use “dev/dev_history.R”</h2>
@@ -361,7 +361,7 @@ $(document).ready(function () {
 <code>devtools::xxx</code> and <code>usethis::xxx</code> in this
 script.<br />
 Its first line should be :</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_build_ignore</span>(<span class="st">&quot;dev&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_build_ignore</span>(<span class="st">&quot;dev&quot;</span>)</span></code></pre></div>
 <p>You can then call {attachment} in this file to help you build your
 description file.</p>
 </div>
@@ -377,7 +377,7 @@ GitHub Actions. See for instance, the GitLab CI workflows in {gitlabr}:
 <ol style="list-style-type: decimal">
 <li>Create a “DESCRIPTION” file</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_description</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_description</span>()</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Fill the “DESCRIPTION” file using
 <code>attachment::att_to_desc_from_is()</code>. <em>Note that to include
@@ -388,19 +388,19 @@ documents. You can use <code>att_from_qmds()</code> if you want,
 although for now there is no difference and it will also parse “.Rmd”
 documents.</em></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bookdown Imports are in Rmds</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>imports <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;bookdown&quot;</span>, attachment<span class="sc">::</span><span class="fu">att_from_rmds</span>(<span class="st">&quot;.&quot;</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>attachment<span class="sc">::</span><span class="fu">att_to_desc_from_is</span>(</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">path.d =</span> <span class="st">&quot;DESCRIPTION&quot;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">imports =</span> imports, <span class="at">suggests =</span> <span class="cn">NULL</span>, </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">must.exist =</span> <span class="cn">FALSE</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># bookdown Imports are in Rmds</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>imports <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;bookdown&quot;</span>, attachment<span class="sc">::</span><span class="fu">att_from_rmds</span>(<span class="st">&quot;.&quot;</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>attachment<span class="sc">::</span><span class="fu">att_to_desc_from_is</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">path.d =</span> <span class="st">&quot;DESCRIPTION&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">imports =</span> imports, <span class="at">suggests =</span> <span class="cn">NULL</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">must.exist =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Install dependencies from the DESCRIPTION file</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;remotes&quot;)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_deps</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># install.packages(&quot;remotes&quot;)</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_deps</span>()</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>Build your {bookdown} / {pagedown} / {quarto}</li>
 </ol>
@@ -413,33 +413,33 @@ Here comes <code>set_remotes_to_desc()</code>, which adds packages that
 were installed from other source than CRAN to <code>Remotes:</code>
 field in DESCRIPTION.</p>
 <p>You can run it after <code>att_to_desc_from_is()</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>attachment<span class="sc">::</span><span class="fu">att_to_desc_from_is</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">path.d =</span> <span class="st">&quot;DESCRIPTION&quot;</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">imports =</span> imports, <span class="at">suggests =</span> <span class="cn">NULL</span>, </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">must.exist =</span> <span class="cn">FALSE</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_remotes_to_desc</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>attachment<span class="sc">::</span><span class="fu">att_to_desc_from_is</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">path.d =</span> <span class="st">&quot;DESCRIPTION&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">imports =</span> imports, <span class="at">suggests =</span> <span class="cn">NULL</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">must.exist =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="fu">set_remotes_to_desc</span>()</span></code></pre></div>
 </div>
 </div>
 <div id="get-all-packages-listed-in-namespace" class="section level2">
 <h2>Get all packages listed in “namespace”</h2>
 <p>You can get the list of packages in your package with
 <code>att_from_namespace()</code></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">att_from_namespace</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">att_from_namespace</span>()</span></code></pre></div>
 </div>
 <div id="get-all-packages-added-using-pkgfunction-or-libraryrequire" class="section level2">
 <h2>Get all packages added using <code>pkg::function</code> or
 library/require</h2>
 <p>This reads all files in directories of R scripts (default to
 <code>R</code> directory of a package)</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">att_from_rscripts</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">att_from_rscripts</span>()</span></code></pre></div>
 </div>
 <div id="get-all-packages-called-in-your-rmd" class="section level2">
 <h2>Get all packages called in your Rmd</h2>
 <p>If you have vignette, you may want to list extra libraries, not
 listed in your “Depends” list. This function applies to any Rmd file, of
 course.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">att_from_rmds</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">att_from_rmds</span>()</span></code></pre></div>
 </div>
 <div id="get-all-packages-called-in-your-rmd-and-show-them-in-this-same-rmd" class="section level2">
 <h2>Get all packages called in your Rmd and show them in this same
@@ -450,10 +450,10 @@ or Rmd files using <code>att_from_rmds()</code>.<br />
 If you want to run <code>att_from_rmds()</code> inside a Rmd as for this
 vignette, you will need to set
 <code>att_from_rmds(inside_rmd = TRUE)</code></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dummypackage <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;dummypackage&quot;</span>, <span class="at">package =</span> <span class="st">&quot;attachment&quot;</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">att_from_rmds</span>(<span class="at">path =</span> <span class="fu">file.path</span>(dummypackage, <span class="st">&quot;vignettes&quot;</span>), <span class="at">inside_rmd =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;knitr&quot;     &quot;rmarkdown&quot; &quot;glue&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>dummypackage <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;dummypackage&quot;</span>, <span class="at">package =</span> <span class="st">&quot;attachment&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">att_from_rmds</span>(<span class="at">path =</span> <span class="fu">file.path</span>(dummypackage, <span class="st">&quot;vignettes&quot;</span>), <span class="at">inside_rmd =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;knitr&quot;     &quot;rmarkdown&quot; &quot;glue&quot;</span></span></code></pre></div>
 </div>
 
 

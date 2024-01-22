@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(attachment)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(attachment)</span></code></pre></div>
 <p><code>create_renv_for_dev()</code> and
 <code>create_renv_for_prod()</code> functions create
 <code>renv.lock</code> files based on development projects.</p>
@@ -362,15 +362,15 @@ This currently includes:</p>
 <p>And thus, run <code>create_renv_for_dev()</code> before sending your
 commit to your remote git server. Use <code>_default</code> (with
 underscore), to use the default list.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_renv_for_dev</span>() <span class="co"># with all default above</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">create_renv_for_dev</span>(<span class="at">dev_pkg =</span> <span class="st">&quot;attachment&quot;</span>) <span class="co"># with {attachment} only</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">create_renv_for_dev</span>(<span class="at">dev_pkg =</span> <span class="fu">c</span>(<span class="st">&quot;_default&quot;</span>, <span class="st">&quot;DT&quot;</span>)) <span class="co"># for all default and {DT}</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">create_renv_for_dev</span>() <span class="co"># with all default above</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">create_renv_for_dev</span>(<span class="at">dev_pkg =</span> <span class="st">&quot;attachment&quot;</span>) <span class="co"># with {attachment} only</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">create_renv_for_dev</span>(<span class="at">dev_pkg =</span> <span class="fu">c</span>(<span class="st">&quot;_default&quot;</span>, <span class="st">&quot;DT&quot;</span>)) <span class="co"># for all default and {DT}</span></span></code></pre></div>
 <p>Later on, if you want to create a R project that can use your package
 developed with {renv}, run <code>create_renv_for_prod()</code>.<br />
 Indeed, your users only need to install packages listed in your
 “DESCRIPTION” file, with the same packages versions you used during
 development.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_renv_for_prod</span>(<span class="at">output =</span> <span class="st">&quot;renv.lock.prod&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">create_renv_for_prod</span>(<span class="at">output =</span> <span class="st">&quot;renv.lock.prod&quot;</span>)</span></code></pre></div>
 </div>
 
 

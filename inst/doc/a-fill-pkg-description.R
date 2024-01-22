@@ -7,22 +7,22 @@ knitr::opts_chunk$set(
 ## -----------------------------------------------------------------------------
 library(attachment)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  att_amend_desc()
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  att_amend_desc(pkg_ignore = c("fakepackage.to_ignore", "other.package"), update.config = TRUE)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  att_amend_desc(extra.suggests = c("suggested.package.not.detected"), update.config = TRUE)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  att_amend_desc(pkg_ignore = c("package.to.move"), extra.suggests = c("package.to.move"), update.config = TRUE)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  att_amend_desc(extra.suggests = c("bookdown"), update.config = TRUE)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  #' Knit my internal template
 #  #'
 #  #' @importFrom bookdown html_document2
@@ -51,14 +51,14 @@ unlink(tmpdir, recursive = TRUE)
 ## ----eval=TRUE----------------------------------------------------------------
 find_remotes(pkg = c("attachment", "desc", "glue"))
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  att_from_description() %>%
 #    find_remotes()
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  find_remotes(list.dirs(.libPaths(), full.names = FALSE, recursive = FALSE))
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  # From GitHub
 #  remotes::install_github("ThinkR-open/fusen",
 #                          quiet = TRUE, upgrade = "never")
@@ -71,10 +71,10 @@ find_remotes(pkg = c("attachment", "desc", "glue"))
 #  attachment::find_remotes("fusen")
 #  #> r-universe: need to set options to repos="https://thinkr-open.r-universe.dev"
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  create_dependencies_file()
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  # No Remotes ----
 #  # remotes::install_github("ThinkR-open/fcuk")
 #  # Attachments ----
@@ -87,7 +87,7 @@ find_remotes(pkg = c("attachment", "desc", "glue"))
 #    }
 #  }
 
-## ---- eval=TRUE---------------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 dummypackage <- system.file("dummypackage", package = "attachment")
 
 att_from_rscripts(path = file.path(dummypackage, "R"))
