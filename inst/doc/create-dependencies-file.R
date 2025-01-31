@@ -1,13 +1,13 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----setup--------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(attachment)
 
-## ----examples-create_dependencies_file, eval = TRUE---------------------------
+## ----examples-create_dependencies_file----------------------------------------
 # Create a fake package
 tmpdir <- tempfile(pattern = "depsfile")
 dir.create(tmpdir)

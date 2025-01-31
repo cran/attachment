@@ -1,8 +1,22 @@
-# attachment (development version)
+# attachment 0.4.3
 
 ## New features
 
--`create_renv_for_dev` can work even outside of an R packages
+- Add `att_from_examples()` to get all packages called in examples from R files
+- Add `att_from_data()` to look for functions called in data loading code
+- `att_amend_desc` amend package DESCRIPTION file (Suggests) with the list of dependencies extracted from examples in R files.
+- `set_remotes_to_desc()` takes into account the branch
+
+## Patch
+
+- Adding an example using suggest packages to the dummypackage
+- `att_from_rmds()` and `att_from_rscript` doesn't search in 'renv' folder anymore
+
+# attachment 0.4.2
+
+## New features
+
+- `create_renv_for_dev` can work even outside of an R packages
 
 # attachment 0.4.1
 
@@ -182,7 +196,7 @@ Minor
 * New function `install_from_description` to install all missing packages listed in the description file
 * Add an hex by @statnmap !
 * Allow for absence of vignette folder in `att_to_description`
-* Add `create_dependencies_file` to create a file listing all packages dependencies to install before your package
+* Add `create_dependencies_file` to create a file listing all packages dependencies to dinstall before your package
 * Allow for `pkg::fun` calls in R scripts with `att_from_functions`
 * Add option to run `devtools::document()` before `att_from_description`
 

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sébastien Rochette" />
 
-<meta name="date" content="2024-07-01" />
+<meta name="date" content="2025-01-31" />
 
 <title>a-Help during package development</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">a-Help during package development</h1>
 <h4 class="author">Sébastien Rochette</h4>
-<h4 class="date">2024-07-01</h4>
+<h4 class="date">2025-01-31</h4>
 
 
 
@@ -422,7 +422,7 @@ follows, with {bookdown} being used only there in my package:</p>
 <pre><code>---
 title: &quot;My Super template&quot;
 author: &quot;John Doe&quot;
-date: &quot;2024-07-01&quot;
+date: &quot;2025-01-31&quot;
 output: bookdown::html_document2
 ---
 
@@ -466,25 +466,15 @@ parameter <code>inside_rmd = TRUE</code>.</p>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; &#39;update.config&#39; was set to TRUE, hence, &#39;use.config&#39; was forced to FALSE</span></span>
 <span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; Saving attachment parameters to yaml config file</span></span>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; Updating dummypackage documentation</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; ────────────────────────────────────────────────────────────────────────────────</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; Changes in roxygen2 7.0.0:</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; * `%` is now escaped automatically in Markdown mode.</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; Please carefully check .Rd files for changes</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; ────────────────────────────────────────────────────────────────────────────────</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; Setting `RoxygenNote` to &quot;7.2.3&quot;</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; ℹ Loading dummypackage</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; Writing &#39;NAMESPACE&#39;</span></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; Writing &#39;NAMESPACE&#39;</span></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; ℹ Loading dummypackage</span></span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; Package(s) Rcpp is(are) in category &#39;LinkingTo&#39;. Check your Description file to be sure it is really what you want.</span></span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="co">#&gt; [-] 1 package(s) removed: utils.</span></span>
-<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a><span class="co">#&gt; [+] 2 package(s) added: stats, glue.</span></span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a></span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="co"># Clean temp files after this example</span></span>
-<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a><span class="fu">unlink</span>(tmpdir, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; Setting `RoxygenNote` to &quot;7.3.2&quot;</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; Writing &#39;NAMESPACE&#39;</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; ℹ Loading dummypackage</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; Writing &#39;NAMESPACE&#39;</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; ℹ Loading dummypackage</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; Package(s) Rcpp is(are) in category &#39;LinkingTo&#39;. Check your Description file to be sure it is really what you want.</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co"># Clean temp files after this example</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="fu">unlink</span>(tmpdir, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="propose-content-for-remotes-field" class="section level2">
 <h2>Propose content for “Remotes” field</h2>
@@ -560,14 +550,18 @@ contains :</p>
 <div id="other-possibilities" class="section level2">
 <h2>Other possibilities</h2>
 <p>Of course, you can also use {attachment} out of a package to list all
-package dependencies of R scripts using <code>att_from_rscripts()</code>
-or Rmd files using <code>att_from_rmds()</code>.</p>
+package dependencies of R scripts using
+<code>att_from_rscripts()</code>, Rmd files using
+<code>att_from_rmds()</code> or examples from R scripts using
+<code>att_from_examples()</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>dummypackage <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;dummypackage&quot;</span>, <span class="at">package =</span> <span class="st">&quot;attachment&quot;</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="fu">att_from_rscripts</span>(<span class="at">path =</span> <span class="fu">file.path</span>(dummypackage, <span class="st">&quot;R&quot;</span>))</span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;stats&quot;</span></span>
 <span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="fu">att_from_rmds</span>(<span class="at">path =</span> <span class="fu">file.path</span>(dummypackage, <span class="st">&quot;vignettes&quot;</span>), <span class="at">inside_rmd =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;knitr&quot;     &quot;rmarkdown&quot; &quot;glue&quot;</span></span></code></pre></div>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;knitr&quot;     &quot;rmarkdown&quot; &quot;glue&quot;</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="fu">att_from_examples</span>(<span class="at">dir.r =</span> <span class="fu">file.path</span>(dummypackage, <span class="st">&quot;R&quot;</span>))</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; [1] &quot;utils&quot;   &quot;stringr&quot;</span></span></code></pre></div>
 </div>
 
 

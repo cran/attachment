@@ -4,6 +4,10 @@
 #'
 #' @export
 #' @importFrom magrittr %>%
+#' @examples
+#' # example code
+#' library(utils)
+#' data("fruit", package = "stringr")
 my_mean <- function(x){
   x <- x %>% stats::na.omit()
   1+1
